@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -29,18 +27,26 @@ public class Row : MonoBehaviour
 
     public void AddLetter(string letter)
     {
+        if (_activeTextBox == _textBox.Length)
+        {
+            Debug.Log($"{_activeTextBox}");
+            return;
+        }
         _textBox[_activeTextBox].text = letter;
-        _activeTextBox++;
+        if (_activeTextBox != _textBox.Length - 1)
+        {
+            _activeTextBox++;
+        }
     }
 
     public void DeleteLetter()
     {
-        if (_activeTextBox == 0)
-        {
-            return;
-        }
+
         _textBox[_activeTextBox].text = "";
-        _activeTextBox--;
+        if (_activeTextBox != 0)
+        {
+            _activeTextBox--;
+        }
     }
 
     private void Start()
