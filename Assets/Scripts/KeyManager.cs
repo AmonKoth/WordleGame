@@ -8,7 +8,6 @@ public class KeyManager : MonoBehaviour
     private Button[] _buttons;
     private void InitializeKeyManager()
     {
-
         _buttons = GetComponentsInChildren<Button>();
         foreach (Button button in _buttons)
         {

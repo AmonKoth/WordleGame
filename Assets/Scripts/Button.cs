@@ -7,8 +7,6 @@ public class Button : MonoBehaviour
     [SerializeField]
     private Keys _key = Keys.A;
 
-
-
     private TextMeshProUGUI _textBox;
     public event Action<Keys> KeyPressed = delegate { };
 
@@ -31,6 +29,5 @@ public class Button : MonoBehaviour
         InitializeButton();
 
     }
-
 
 }

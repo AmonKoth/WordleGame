@@ -7,7 +7,6 @@ public class Row : MonoBehaviour
     private GameObject[] _textObjects;
     private TextMeshProUGUI[] _textBox;
 
-    private int _activeTextBox = 0;
     private void ClearTexts()
     {
         foreach (TextMeshProUGUI textBox in _textBox)
@@ -25,28 +24,14 @@ public class Row : MonoBehaviour
         }
     }
 
-    public void AddLetter(string letter)
+    public void AddLetter(Keys letter, int activeTextBox)
     {
-        if (_activeTextBox == _textBox.Length)
-        {
-            Debug.Log($"{_activeTextBox}");
-            return;
-        }
-        _textBox[_activeTextBox].text = letter;
-        if (_activeTextBox != _textBox.Length - 1)
-        {
-            _activeTextBox++;
-        }
+        _textBox[activeTextBox].text = letter.ToString();
     }
 
-    public void DeleteLetter()
+    public void DeleteLetter(int activeTextBox)
     {
-
-        _textBox[_activeTextBox].text = "";
-        if (_activeTextBox != 0)
-        {
-            _activeTextBox--;
-        }
+        _textBox[activeTextBox].text = "";
     }
 
     private void Start()
