@@ -1446,6 +1446,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &802076924 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7595064807379233024, guid: da8a4ef4cf2794f4e8527c6b614ef401, type: 3}
+  m_PrefabInstance: {fileID: 7595064807707960238}
+  m_PrefabAsset: {fileID: 0}
+--- !u!222 &802076926
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802076924}
+  m_CullTransparentMesh: 1
 --- !u!1001 &841043217
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4126,6 +4139,14 @@ PrefabInstance:
     - target: {fileID: 7595064807379233025, guid: da8a4ef4cf2794f4e8527c6b614ef401, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7595064807379233025, guid: da8a4ef4cf2794f4e8527c6b614ef401, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7595064807379233025, guid: da8a4ef4cf2794f4e8527c6b614ef401, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7595064807379233025, guid: da8a4ef4cf2794f4e8527c6b614ef401, type: 3}
       propertyPath: m_AnchoredPosition.x

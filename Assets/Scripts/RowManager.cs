@@ -25,11 +25,13 @@ public class RowManager : MonoBehaviour
         }
         if (key == Keys.BACK)
         {
+            if (_currentLength == 0)
+            {
+                return;
+            }
             _rowList[_currentRow].DeleteLetter(_currentLength - 1);
-
             _guessedWord.Pop();
             _currentLength--;
-            Debug.Log($"{_currentLength}");
             return;
         }
         if (_currentLength == _wordLength)
@@ -39,7 +41,6 @@ public class RowManager : MonoBehaviour
         _guessedWord.Push(key);
         _rowList[_currentRow].AddLetter(key, _currentLength);
         _currentLength++;
-        Debug.Log($"{_currentLength}");
     }
 
     private void SubmitPressed()
