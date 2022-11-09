@@ -330,6 +330,51 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5562038297523271646, guid: 0d8006d6336178e4b8aa7518dfa4c5a9, type: 3}
   m_PrefabInstance: {fileID: 2045062145}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &147640908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 147640910}
+  - component: {fileID: 147640909}
+  m_Layer: 0
+  m_Name: WordSelecter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &147640909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147640908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8179759811a11b441acea19bdfaaaf1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textFile: {fileID: 4900000, guid: 7714bb03d9f70964db8087115bedcbcf, type: 3}
+--- !u!4 &147640910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147640908}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 756.20526, y: 591.0111, z: -10.92109}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &149911540
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1556,7 +1601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7138348140925531953, guid: 0d8006d6336178e4b8aa7518dfa4c5a9, type: 3}
       propertyPath: _key
-      value: 1
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d8006d6336178e4b8aa7518dfa4c5a9, type: 3}
@@ -4160,6 +4205,10 @@ PrefabInstance:
       propertyPath: _correctWord
       value: POINT
       objectReference: {fileID: 0}
+    - target: {fileID: 7595064808286225620, guid: da8a4ef4cf2794f4e8527c6b614ef401, type: 3}
+      propertyPath: _wordSelector
+      value: 
+      objectReference: {fileID: 147640909}
     - target: {fileID: 7595064808286225622, guid: da8a4ef4cf2794f4e8527c6b614ef401, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

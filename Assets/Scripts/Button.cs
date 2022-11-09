@@ -1,13 +1,17 @@
 using System;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Button : MonoBehaviour
 {
     [SerializeField]
     private Keys _key = Keys.A;
+    [SerializeField]
+    private Image _buttonBackground;
 
     private TextMeshProUGUI _textBox;
+
     public event Action<Keys> KeyPressed = delegate { };
 
     private void InitializeButton()
@@ -27,7 +31,10 @@ public class Button : MonoBehaviour
     private void Awake()
     {
         InitializeButton();
-
+    }
+    public void ChangeColor(Color color)
+    {
+        _buttonBackground.color = color;
     }
 
 }
