@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,12 +14,15 @@ public class RowManager : MonoBehaviour
     private int _currentLength = 0;
     private int _correctCount = 0;
     private int _currentRow = 0;
+
     //For testing delet later all later
-    private string _correctWord;
-    char[] correctWord;
-    List<string> _listOfCorrectness;
+    private char[] _correctWord;
+    private string guessedWord;
+    private HashSet<char> hashSetofCorrectWord;
     /// Until here
-    private Stack _guessedWord = new Stack();
+
+    public event Action<Color, char> ColorChanged = delegate { };
+
     public void OnKeyPress(Keys key)
     {
         if (key == Keys.SUBMIT)
@@ -34,45 +37,47 @@ public class RowManager : MonoBehaviour
                 return;
             }
             _rowList[_currentRow].DeleteLetter(_currentLength - 1);
-            _guessedWord.Pop();
+            guessedWord = guessedWord.Substring(0, _currentLength - 1);
             _currentLength--;
             return;
         }
+
         if (_currentLength == _wordLength)
         {
             return;
         }
-        _guessedWord.Push(key);
+        guessedWord += key.ToString();
         _rowList[_currentRow].AddLetter(key, _currentLength);
+        Debug.Log($"{guessedWord}");
         _currentLength++;
     }
 
     private void SubmitPressed()
     {
-
         if (_currentLength != _wordLength)
         {
             return;
         }
-
-        Stack testStack = _guessedWord;
-        Stack reverseStack = new Stack();
-        //Nothing to see here just reversing the stack to print the word in correct order
-        for (int i = 0; i < _wordLength; i++)
+        if (!_wordSelector.CheckValid(guessedWord))
         {
-            reverseStack.Push(testStack.Pop());
+            Debug.Log($"Not a valid Word");
+            return;
         }
+
+        char[] guessArray = guessedWord.ToCharArray();
+
         for (int i = 0; i < _wordLength; i++)
         {
-            string testLetter = reverseStack.Pop().ToString();
-            if (testLetter == correctWord[i].ToString())
+            if (guessArray[i] == _correctWord[i])
             {
                 _rowList[_currentRow].ChangeColor(Color.green, i);
+                ColorChanged(Color.green, guessArray[i]);
                 _correctCount++;
             }
-            else if (_listOfCorrectness.Contains(testLetter))
+            else if (hashSetofCorrectWord.Contains(guessArray[i]))
             {
                 _rowList[_currentRow].ChangeColor(Color.yellow, i);
+                ColorChanged(Color.yellow, guessArray[i]);
             }
         }
         if (_correctCount == _wordLength)
@@ -89,17 +94,17 @@ public class RowManager : MonoBehaviour
     }
     private void InitializeCorrectWord()
     {
-        _correctWord = _wordSelector.GetChosenWord();
-        correctWord = _correctWord.ToCharArray();
-        _listOfCorrectness = new List<string>(_wordLength);
-        for (int i = 0; i < correctWord.Length; i++)
+        _correctWord = _wordSelector.ChooseWord(_wordLength);
+        hashSetofCorrectWord = new HashSet<char>(_wordLength);
+        for (int i = 0; i < _wordLength; i++)
         {
-            _listOfCorrectness.Add(correctWord[i].ToString());
+            hashSetofCorrectWord.Add(_correctWord[i]);
         }
     }
 
     private void NextRow()
     {
+        guessedWord = "";
         _currentLength = 0;
         _correctCount = 0;
         _currentRow++;

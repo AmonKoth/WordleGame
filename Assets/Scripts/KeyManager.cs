@@ -9,6 +9,7 @@ public class KeyManager : MonoBehaviour
     private void InitializeKeyManager()
     {
         _buttons = GetComponentsInChildren<Button>();
+        _rowManager.ColorChanged += HandleColorChange;
         foreach (Button button in _buttons)
         {
             button.KeyPressed += KeyPressed;
@@ -27,5 +28,16 @@ public class KeyManager : MonoBehaviour
             return;
         }
         _rowManager.OnKeyPress(key);
+    }
+
+    private void HandleColorChange(Color color, char key)
+    {
+        foreach (Button button in _buttons)
+        {
+            if (button.GetKey().ToString() == key.ToString())
+            {
+                button.ChangeColor(color);
+            }
+        }
     }
 }

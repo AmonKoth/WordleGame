@@ -12,6 +12,8 @@ public class Button : MonoBehaviour
 
     private TextMeshProUGUI _textBox;
 
+    public Keys GetKey() => _key;
+
     public event Action<Keys> KeyPressed = delegate { };
 
     private void InitializeButton()
@@ -34,6 +36,10 @@ public class Button : MonoBehaviour
     }
     public void ChangeColor(Color color)
     {
+        if (_buttonBackground.color == Color.green)
+        {
+            return;
+        }
         _buttonBackground.color = color;
     }
 
