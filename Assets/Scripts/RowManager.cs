@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class RowManager : MonoBehaviour
 {
@@ -18,13 +19,14 @@ public class RowManager : MonoBehaviour
     //For testing delet later all later
     private char[] _correctWord;
     private string guessedWord;
-    private HashSet<char> hashSetofCorrectWord;
     /// Until here
 
     public event Action<Color, char> ColorChanged = delegate { };
+    public event Action<bool, char[]> GameWon = delegate { };
 
     public void OnKeyPress(Keys key)
     {
+
         if (key == Keys.SUBMIT)
         {
             SubmitPressed();
@@ -48,7 +50,6 @@ public class RowManager : MonoBehaviour
         }
         guessedWord += key.ToString();
         _rowList[_currentRow].AddLetter(key, _currentLength);
-        Debug.Log($"{guessedWord}");
         _currentLength++;
     }
 
@@ -65,24 +66,63 @@ public class RowManager : MonoBehaviour
         }
 
         char[] guessArray = guessedWord.ToCharArray();
-
+        char[] testArray = _correctWord;
+        Dictionary<int, LetterPlace> colorTheGuess = new Dictionary<int, LetterPlace>();
+        //Color assign part
         for (int i = 0; i < _wordLength; i++)
         {
             if (guessArray[i] == _correctWord[i])
             {
-                _rowList[_currentRow].ChangeColor(Color.green, i);
-                ColorChanged(Color.green, guessArray[i]);
+                testArray = testArray.Where(letter => letter != _correctWord[i]).ToArray();
+                colorTheGuess[i] = LetterPlace.CORRECT;
                 _correctCount++;
             }
-            else if (hashSetofCorrectWord.Contains(guessArray[i]))
+        }
+
+        HashSet<char> remainingLetters = new HashSet<char>(testArray.Length - 1);
+
+        for (int i = 0; i < testArray.Length; i++)
+        {
+            remainingLetters.Add(testArray[i]);
+        }
+
+        for (int i = 0; i < guessArray.Length; i++)
+        {
+            if (remainingLetters.Contains(guessArray[i]))
             {
-                _rowList[_currentRow].ChangeColor(Color.yellow, i);
-                ColorChanged(Color.yellow, guessArray[i]);
+                colorTheGuess[i] = LetterPlace.WRONGPLACE;
             }
         }
+
+        //Coloring Part
+        for (int index = 0; index < _wordLength; index++)
+        {
+            LetterPlace isExists;
+            colorTheGuess.TryGetValue(index, out isExists);
+            if (isExists == LetterPlace.CORRECT)
+            {
+                _rowList[_currentRow].ChangeColor(Color.green, index);
+                ColorChanged(Color.green, guessArray[index]);
+            }
+            else if (isExists == LetterPlace.WRONGPLACE)
+            {
+                _rowList[_currentRow].ChangeColor(Color.yellow, index);
+                ColorChanged(Color.yellow, guessArray[index]);
+            }
+            else
+            {
+                _rowList[_currentRow].ChangeColor(Color.gray, index);
+                ColorChanged(Color.gray, guessArray[index]);
+            }
+        }
+
+        colorTheGuess.Clear();
+
         if (_correctCount == _wordLength)
         {
+
             Debug.Log($"YOU WON");
+            GameWon(true, _correctWord);
             return;
         }
         Debug.Log($"Wrong Word");
@@ -92,14 +132,10 @@ public class RowManager : MonoBehaviour
         }
         NextRow();
     }
+
     private void InitializeCorrectWord()
     {
         _correctWord = _wordSelector.ChooseWord(_wordLength);
-        hashSetofCorrectWord = new HashSet<char>(_wordLength);
-        for (int i = 0; i < _wordLength; i++)
-        {
-            hashSetofCorrectWord.Add(_correctWord[i]);
-        }
     }
 
     private void NextRow()
@@ -111,6 +147,7 @@ public class RowManager : MonoBehaviour
     }
     private void LostTheGame()
     {
+        GameWon(false, _correctWord);
         Debug.Log($"LOST THE GAME");
     }
     private void Awake()
